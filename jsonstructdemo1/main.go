@@ -37,5 +37,4 @@ func main() {
 	// fmt.Printf("%#v\n", s1)
 
 	// 将 struct 转换为 json 并保持变量小写
-
 }
