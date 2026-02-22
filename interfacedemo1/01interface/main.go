@@ -11,8 +11,13 @@ type Computer struct {
 }
 
 func (c Computer) work(usb Usber) {
-	usb.start()
-	usb.stop()
+	// 要判断 usb 的类型，此处判断 usb 对象是否为 Phone
+	if _, ok := usb.(Phone); ok {
+		usb.start()
+	} else {
+		usb.stop()
+	}
+
 }
 
 // 如果接口中有方法，必须通过结构体或自定义类型实现
