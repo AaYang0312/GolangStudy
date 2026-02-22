@@ -1,1 +1,1 @@
-An archive repository for learning Golang
+An archive repository for my Golang learning
