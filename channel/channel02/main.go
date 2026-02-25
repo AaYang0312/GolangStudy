@@ -8,7 +8,7 @@ import (
 
 var wg sync.WaitGroup
 
-func WriteChan(ch chan int) {
+func WriteChan(ch chan<- int) { // 写为只写
 	defer wg.Done()
 	for i := 1; i <= 100; i++ {
 		ch <- i
@@ -18,7 +18,7 @@ func WriteChan(ch chan int) {
 	close(ch)
 }
 
-func ReadChan(ch chan int) {
+func ReadChan(ch <-chan int) { // 写为只读
 	defer wg.Done()
 	for v := range ch {
 		time.Sleep(time.Millisecond * 50)
