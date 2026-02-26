@@ -21,7 +21,7 @@ func (s Student) GetInfo() string {
 	var str = fmt.Sprintf("姓名：%v, 年龄：%d, 分数：%d", s.Name, s.Age, s.Score)
 	return str
 }
-func (s Student) print() {
+func (s Student) Print() {
 	fmt.Println("这是一个打印方法...")
 }
 
@@ -69,7 +69,7 @@ func PrintStructField(s interface{}) {
 // 打印结构体方法
 func PrintStructFn(s interface{}) {
 	t := reflect.TypeOf(s)
-	// v := reflect.ValueOf(s)
+	v := reflect.ValueOf(s)
 
 	// 1. 类型变量Method获取结构体的方法
 	// Method() 和结构体方法的顺序无关，和方法的 ASCII 码有关
@@ -77,12 +77,48 @@ func PrintStructFn(s interface{}) {
 		fmt.Printf("第%d个方法为%v, 类型为%v\n", i, t.Method(i).Name, t.Method(i).Type)
 	}
 	// 第二种方法按名称
-	ma, _ := t.MethodByName("Print")
-	fmt.Printf("%v\n", ma)
+	// ma, _ := t.MethodByName("Print")
+	// fmt.Printf("%v\n", ma)
+
 	// 2. 类型变量获取结构体有多少个方法
+	// 使用NumMethod()
 
 	// 3. 调用方法
+	// str := v.Method(0).Call(nil)
+	// str[0].String()
+	// v.MethodByName("Print").Call(nil)
 
+	var params []reflect.Value
+	params = append(params, reflect.ValueOf("李四"))
+	params = append(params, reflect.ValueOf(20))
+	params = append(params, reflect.ValueOf(94))
+	v.MethodByName("SetInfo").Call(params)
+	fmt.Println(v.MethodByName("GetInfo").Call(nil)[0].String())
+}
+
+// 修改结构体中的值
+func reflectChangeStruct(s interface{}) {
+	t := reflect.TypeOf(s)
+	v := reflect.ValueOf(s)
+	// fmt.Println(v)
+	// fmt.Println(t.Elem().Kind())
+	if t.Kind() == reflect.Ptr {
+		t = t.Elem()
+		v = v.Elem()
+	}
+	if t.Kind() != reflect.Struct {
+		fmt.Println("不是struct类型！")
+		return
+	} else {
+		// 修改
+		name := v.FieldByName("Name")
+		name.SetString("小李")
+		age := v.FieldByName("Age")
+		age.SetInt(22)
+		result := v.MethodByName("GetInfo").Call(nil)
+		str := result[0].String()
+		fmt.Println(str)
+	}
 }
 
 func main() {
@@ -92,5 +128,6 @@ func main() {
 		100,
 	}
 	// PrintStructField(stu1)
-	PrintStructFn(stu1)
+	// PrintStructFn(&stu1)
+	reflectChangeStruct(&stu1)
 }
