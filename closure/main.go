@@ -30,8 +30,8 @@ func newIDGenerators(start int) (
 }
 func main() {
 	idGen1, idGen10 := newIDGenerators(1)
-	fmt.Println(idGen1.Call())
-	fmt.Println(idGen1.Call())
-	fmt.Println(idGen10.Call())
-	fmt.Println(idGen10.Call())
+	fmt.Println(idGen1.Call())  // 1
+	fmt.Println(idGen1.Call())  // 2
+	fmt.Println(idGen10.Call()) // 3
+	fmt.Println(idGen10.Call()) // 13
 }
