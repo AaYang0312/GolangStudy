@@ -9,12 +9,12 @@ import (
 func main() {
 	// 1.读取文件
 	file, err := os.Open("./main.go")
-	defer file.Close()
 
 	if err != nil {
 		fmt.Println("出错:", err)
 		return
 	}
+	defer file.Close()
 
 	// 2.读取内容
 	var strSlice []byte
