@@ -22,7 +22,7 @@ func main() {
 	strReader := bufio.NewReader(file) // *os.file实现了io.Reader接口
 	for {
 		str, err := strReader.ReadString('\n')
-		if err == io.EOF {
+		if err == io.EOF { // 最后一行没有分隔符
 			strString += str
 			break
 		}
